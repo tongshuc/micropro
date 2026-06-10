@@ -27,8 +27,7 @@ count:  .word 12345
 scao8658_add_test:
     push {r4, lr}
 
-    @ Stop before executing the first ldr instruction
-    bkpt
+   
 
     @ Load the addresses of each item
     ldr r0, =num
@@ -56,8 +55,7 @@ scao8658_add_test:
     ldr r2, =huge
     ldrd r0, r1, [r2]
 
-    @ Stop after the final ldrd has executed
-    bkpt
+   
 
     add r4, r0, r1
 
