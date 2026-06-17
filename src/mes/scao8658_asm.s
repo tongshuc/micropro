@@ -71,9 +71,25 @@ scao8658_add_test:
 @ Function Declaration
 @ Function: busy_delay
 @ Purpose: Perform a simple delay loop
+.global scao8658_string_test
+
+scao8658_string_test:
+
+StringLoop:
+    ldrb r1, [r0]
+    cmp r1, #0
+    beq OutLabel
+
+    add r0, r0, #1
+    b StringLoop
+
+OutLabel:
+    bkpt
+    bx lr
+
+.size scao8658_string_test, .-scao8658_string_test
 .global busy_delay
 .type busy_delay, %function
-
 busy_delay:
     push {r6}
 

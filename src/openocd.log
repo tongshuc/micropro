@@ -1,0 +1,31 @@
+Info : Listening on port 6666 for tcl connections
+Info : Listening on port 4444 for telnet connections
+Info : clock speed 1000 kHz
+Info : STLINK V2J37M26 (API v2) VID:PID 0483:374B
+Info : Target voltage: 2.896454
+Info : [stm32f3x.cpu] Cortex-M4 r0p1 processor detected
+Info : [stm32f3x.cpu] target has 6 breakpoints, 4 watchpoints
+Info : starting gdb server for stm32f3x.cpu on pipe
+Info : accepting 'gdb' connection from pipe
+[stm32f3x.cpu] halted due to debug-request, current mode: Thread 
+xPSR: 0x210f0000 pc: 0x08007438 msp: 0x20007f90
+Info : device id = 0x10036422
+Info : flash size = 256 KiB
+Info : Unable to match requested speed 1000 kHz, using 950 kHz
+Info : Unable to match requested speed 1000 kHz, using 950 kHz
+[stm32f3x.cpu] halted due to debug-request, current mode: Thread 
+xPSR: 0x01000000 pc: 0x0800adb0 msp: 0x20008000
+Info : halted: PC: 0x08000282
+Info : halted: PC: 0x08000284
+Info : halted: PC: 0x08000286
+Info : halted: PC: 0x08000288
+Info : halted: PC: 0x0800028a
+Info : halted: PC: 0x0800028c
+Info : halted: PC: 0x0800028e
+Info : halted: PC: 0x08000290
+Info : halted: PC: 0x08000292
+Info : halted: PC: 0x08000294
+Info : halted: PC: 0x08000296
+Info : halted: PC: 0x08000298
+Info : halted: PC: 0x0800029c
+Info : dropped 'gdb' connection
