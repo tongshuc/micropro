@@ -100,4 +100,4 @@ void _scao8658_Assignment2(int action)
            scao8658_a2(count, delay));
 }
 
-ADD_CMD("scao8658_a2", _scao8658_Assignment2, "Assignment 2")
+ADD_CMD("scao8658_a2", _scao8658_Assignment2, "Assignment 2");
