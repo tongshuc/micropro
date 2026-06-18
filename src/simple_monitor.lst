@@ -50,7 +50,9 @@ f1e0f85f l       *ABS*	00000000 BootRAM
 2000001c l       .data	00000000 num
 2000001d l       .data	00000000 str2
 20000028 l       .data	00000000 count
-080002b4 l       .text	00000000 delay_label
+080002ae l       .text	00000000 StringLoop
+080002ba l       .text	00000000 OutLabel
+080002c2 l       .text	00000000 delay_label
 00000000 l    df *ABS*	00000000 libc_a-strlen.o
 00000000 l    df *ABS*	00000000 memset.c
 00000000 l    df *ABS*	00000000 strtok.c
@@ -740,7 +742,7 @@ f1e0f85f l       *ABS*	00000000 BootRAM
 08006be4 g     F .text	00000012 .hidden __aeabi_dcmpge
 080149c8 g     O .rodata	00000008 DAC_DHR12L1_fields
 08011f90 g     O .rodata	00000030 TIM17_SR_fields
-080002ae g       .text	00000002 scao8658_string_test
+080002ae g       .text	00000010 scao8658_string_test
 20000a74 g     O .bss	00000190 __atexit0
 200008b0 g     O .data	00000034 I3g4250Drv
 00001000 g       *ABS*	00000000 _Min_Heap_Size
@@ -1063,7 +1065,7 @@ f1e0f85f l       *ABS*	00000000 BootRAM
 08006ba8 g     F .text	00000012 .hidden __aeabi_dcmpeq
 20000158 g     O .data	0000000c __sglue
 080194a8 g     O .rodata	00000050 USB_FS_USB_EP1R_fields
-080002b0 g     F .text	00000000 busy_delay
+080002be g     F .text	00000000 busy_delay
 0800f648 g     O .rodata	000000b0 ADC1_2_CSR_fields
 0800efa0 g     O .rodata	00000008 FPU_FPCAR_fields
 200008e4 g       .data	00000000 _edata
@@ -1412,41 +1414,41 @@ scao8658_add_test:
 
     @ Load the addresses of each item
     ldr r0, =num
- 800027e:	4810      	ldr	r0, [pc, #64]	@ (80002c0 <delay_label+0xc>)
+ 800027e:	4814      	ldr	r0, [pc, #80]	@ (80002d0 <delay_label+0xe>)
     ldr r0, =big
- 8000280:	4810      	ldr	r0, [pc, #64]	@ (80002c4 <delay_label+0x10>)
+ 8000280:	4814      	ldr	r0, [pc, #80]	@ (80002d4 <delay_label+0x12>)
     ldr r0, =huge
- 8000282:	4811      	ldr	r0, [pc, #68]	@ (80002c8 <delay_label+0x14>)
+ 8000282:	4815      	ldr	r0, [pc, #84]	@ (80002d8 <delay_label+0x16>)
     ldr r0, =str2
- 8000284:	4811      	ldr	r0, [pc, #68]	@ (80002cc <delay_label+0x18>)
+ 8000284:	4815      	ldr	r0, [pc, #84]	@ (80002dc <delay_label+0x1a>)
 
     @ Load the first byte of str2
     ldr r2, =str2
- 8000286:	4a11      	ldr	r2, [pc, #68]	@ (80002cc <delay_label+0x18>)
+ 8000286:	4a15      	ldr	r2, [pc, #84]	@ (80002dc <delay_label+0x1a>)
     ldrb r0, [r2]
  8000288:	7810      	ldrb	r0, [r2, #0]
 
     @ Load the first word of str2
     ldr r2, =str2
- 800028a:	4a10      	ldr	r2, [pc, #64]	@ (80002cc <delay_label+0x18>)
+ 800028a:	4a14      	ldr	r2, [pc, #80]	@ (80002dc <delay_label+0x1a>)
     ldr r0, [r2]
  800028c:	6810      	ldr	r0, [r2, #0]
 
     @ Load the value of num
     ldr r2, =num
- 800028e:	4a0c      	ldr	r2, [pc, #48]	@ (80002c0 <delay_label+0xc>)
+ 800028e:	4a10      	ldr	r2, [pc, #64]	@ (80002d0 <delay_label+0xe>)
     ldrb r0, [r2]
  8000290:	7810      	ldrb	r0, [r2, #0]
 
     @ Load the value of big
     ldr r2, =big
- 8000292:	4a0c      	ldr	r2, [pc, #48]	@ (80002c4 <delay_label+0x10>)
+ 8000292:	4a10      	ldr	r2, [pc, #64]	@ (80002d4 <delay_label+0x12>)
     ldr r0, [r2]
  8000294:	6810      	ldr	r0, [r2, #0]
 
     @ Load the 64-bit value of huge
     ldr r2, =huge
- 8000296:	4a0c      	ldr	r2, [pc, #48]	@ (80002c8 <delay_label+0x14>)
+ 8000296:	4a10      	ldr	r2, [pc, #64]	@ (80002d8 <delay_label+0x16>)
     ldrd r0, r1, [r2]
  8000298:	e9d2 0100 	ldrd	r0, r1, [r2]
 
@@ -1458,7 +1460,7 @@ scao8658_add_test:
     mov r0, r2
  80002a0:	4610      	mov	r0, r2
     bl busy_delay
- 80002a2:	f000 f805 	bl	80002b0 <busy_delay>
+ 80002a2:	f000 f80c 	bl	80002be <busy_delay>
 
     mov r0, r4
  80002a6:	4620      	mov	r0, r4
@@ -1469,49 +1471,67 @@ scao8658_add_test:
  80002ac:	4770      	bx	lr
 
 080002ae <scao8658_string_test>:
-@ Purpose: Perform a simple delay loop
 .global scao8658_string_test
 
 scao8658_string_test:
 
-    bx lr
- 80002ae:	4770      	bx	lr
+StringLoop:
+    ldrb r1, [r0]
+ 80002ae:	7801      	ldrb	r1, [r0, #0]
+    cmp r1, #0
+ 80002b0:	2900      	cmp	r1, #0
+    beq OutLabel
+ 80002b2:	d002      	beq.n	80002ba <OutLabel>
 
-080002b0 <busy_delay>:
+    add r0, r0, #1
+ 80002b4:	f100 0001 	add.w	r0, r0, #1
+    b StringLoop
+ 80002b8:	e7f9      	b.n	80002ae <scao8658_string_test>
+
+080002ba <OutLabel>:
+
+OutLabel:
+    bkpt
+ 80002ba:	be00      	bkpt	0x0000
+    bx lr
+ 80002bc:	4770      	bx	lr
+
+080002be <busy_delay>:
 
 .size scao8658_string_test, .-scao8658_string_test
 .global busy_delay
 .type busy_delay, %function
 busy_delay:
     push {r6}
- 80002b0:	b440      	push	{r6}
+ 80002be:	b440      	push	{r6}
 
     mov r6, r0
- 80002b2:	4606      	mov	r6, r0
+ 80002c0:	4606      	mov	r6, r0
 
-080002b4 <delay_label>:
+080002c2 <delay_label>:
 
 delay_label:
     subs r6, r6, #1
- 80002b4:	3e01      	subs	r6, #1
+ 80002c2:	3e01      	subs	r6, #1
     bge delay_label
- 80002b6:	dafd      	bge.n	80002b4 <delay_label>
+ 80002c4:	dafd      	bge.n	80002c2 <delay_label>
 
     mov r0, #0
- 80002b8:	f04f 0000 	mov.w	r0, #0
+ 80002c6:	f04f 0000 	mov.w	r0, #0
 
     pop {r6}
- 80002bc:	bc40      	pop	{r6}
+ 80002ca:	bc40      	pop	{r6}
     bx lr
- 80002be:	4770      	bx	lr
+ 80002cc:	4770      	bx	lr
+ 80002ce:	0000      	.short	0x0000
     ldr r0, =num
- 80002c0:	2000001c 	.word	0x2000001c
+ 80002d0:	2000001c 	.word	0x2000001c
     ldr r0, =big
- 80002c4:	20000018 	.word	0x20000018
+ 80002d4:	20000018 	.word	0x20000018
     ldr r0, =huge
- 80002c8:	20000008 	.word	0x20000008
+ 80002d8:	20000008 	.word	0x20000008
     ldr r0, =str2
- 80002cc:	2000001d 	.word	0x2000001d
+ 80002dc:	2000001d 	.word	0x2000001d
 	...
 
 08000300 <strlen>:

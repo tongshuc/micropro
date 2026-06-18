@@ -1161,11 +1161,11 @@ LOAD /usr/lib/gcc/arm-none-eabi/13.2.1/thumb/v7e-m+fp/hard/crtn.o
                 0x0800025c                my_Tick
                 0x08000270                my_Loop
                 0x08000274                my_Init
- .text          0x0800027c       0x54 build/mes/scao8658_asm.o
+ .text          0x0800027c       0x64 build/mes/scao8658_asm.o
                 0x0800027c                scao8658_add_test
                 0x080002ae                scao8658_string_test
-                0x080002b0                busy_delay
- *fill*         0x080002d0       0x30 
+                0x080002be                busy_delay
+ *fill*         0x080002e0       0x20 
  .text          0x08000300       0xd8 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-strlen.o)
                 0x08000300                strlen
  .text          0x080003d8       0xa4 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-memset.o)
@@ -5061,101 +5061,101 @@ LOAD /usr/lib/gcc/arm-none-eabi/13.2.1/thumb/v7e-m+fp/hard/libgcc.a
  .debug_rnglists
                 0x0000119f       0x23 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-vfiprintf.o)
 
-.debug_line     0x00000000    0x17663
+.debug_line     0x00000000    0x1766a
  .debug_line    0x00000000      0x36b build/main.o
  .debug_line    0x0000036b       0x4d build/mycode.o
  .debug_line    0x000003b8       0xae build/mytest.o
  .debug_line    0x00000466      0x165 build/mes/scao8658_hook.o
- .debug_line    0x000005cb       0x63 build/mes/scao8658_asm.o
- .debug_line    0x0000062e       0xe7 build/monitor.o
- .debug_line    0x00000715      0x498 build/parser.o
- .debug_line    0x00000bad      0x1cd build/dump.o
- .debug_line    0x00000d7a      0x1f7 build/syscall.o
- .debug_line    0x00000f71      0x739 build/terminal.o
- .debug_line    0x000016aa      0x7e1 build/decoder/decoder.o
- .debug_line    0x00001e8b       0x7f build/decoder/STM32F30x_decoder.o
- .debug_line    0x00001f0a      0x21c build/Drivers/CMSIS/Device/ST/STM32F3xx/Source/Templates/system_stm32f3xx.o
- .debug_line    0x00002126     0x17f9 build/Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_rcc.o
- .debug_line    0x0000391f      0x393 build/Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal.o
- .debug_line    0x00003cb2      0x5bd build/Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_cortex.o
- .debug_line    0x0000426f      0x57f build/Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_gpio.o
- .debug_line    0x000047ee     0x11c5 build/Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_pcd.o
- .debug_line    0x000059b3      0x252 build/Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_pcd_ex.o
- .debug_line    0x00005c05     0x1d2b build/Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_spi.o
- .debug_line    0x00007930      0x56a build/Drivers/STM32_USB_Device_Library/Core/Src/usbd_core.o
- .debug_line    0x00007e9a      0x61e build/Drivers/STM32_USB_Device_Library/Core/Src/usbd_ctlreq.o
- .debug_line    0x000084b8      0x1e7 build/Drivers/STM32_USB_Device_Library/Core/Src/usbd_ioreq.o
- .debug_line    0x0000869f      0x4f7 build/Drivers/STM32_USB_Device_Library/Class/CDC/Src/usbd_cdc.o
- .debug_line    0x00008b96      0x5ab build/usbd_conf.o
- .debug_line    0x00009141      0x27f build/usbd_desc.o
- .debug_line    0x000093c0      0x298 build/usbd_cdc_interface.o
- .debug_line    0x00009658      0x6e2 build/Drivers/BSP/STM32F3-Discovery/stm32f3_discovery.o
- .debug_line    0x00009d3a      0x333 build/Drivers/BSP/STM32F3-Discovery/stm32f3_discovery_gyroscope.o
- .debug_line    0x0000a06d      0x458 build/Drivers/BSP/Components/l3gd20/l3gd20.o
- .debug_line    0x0000a4c5      0x462 build/Drivers/BSP/Components/i3g4250d/i3g4250d.o
- .debug_line    0x0000a927       0xa8 build/Drivers/CMSIS/Device/ST/STM32F3xx/Source/Templates/gcc/startup_stm32f303xc.o
- .debug_line    0x0000a9cf       0x86 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-strlen.o)
- .debug_line    0x0000aa55      0x1b6 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-memset.o)
- .debug_line    0x0000ac0b      0x158 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-strtok.o)
- .debug_line    0x0000ad63      0x3e6 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-strtoul.o)
- .debug_line    0x0000b149      0x374 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-setvbuf.o)
- .debug_line    0x0000b4bd      0x10c /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-errno.o)
- .debug_line    0x0000b5c9       0xe7 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-impure.o)
- .debug_line    0x0000b6b0      0x123 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-strcasecmp.o)
- .debug_line    0x0000b7d3      0x173 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-putchar.o)
- .debug_line    0x0000b946      0x545 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-freer.o)
- .debug_line    0x0000be8b      0x1c0 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-strtok_r.o)
- .debug_line    0x0000c04b      0x16b /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-malloc.o)
- .debug_line    0x0000c1b6      0x2a1 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-putc.o)
- .debug_line    0x0000c457       0xe6 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-sysconf.o)
- .debug_line    0x0000c53d      0x11e /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-init.o)
- .debug_line    0x0000c65b      0x27d /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-wbuf.o)
- .debug_line    0x0000c8d8      0x153 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-mlock.o)
- .debug_line    0x0000ca2b      0x4fc /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-findfp.o)
- .debug_line    0x0000cf27      0x24a /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-puts.o)
- .debug_line    0x0000d171      0x5ec /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-fvwrite.o)
- .debug_line    0x0000d75d       0x97 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-ctype_.o)
- .debug_line    0x0000d7f4       0xc3 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-atexit.o)
- .debug_line    0x0000d8b7      0x1c5 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-printf.o)
- .debug_line    0x0000da7c       0xb9 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-strcpy.o)
- .debug_line    0x0000db35       0xd2 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-fini.o)
- .debug_line    0x0000dc07      0x1d1 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-fwalk.o)
- .debug_line    0x0000ddd8     0x1a85 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-vfprintf.o)
- .debug_line    0x0000f85d      0x3bd /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-makebuf.o)
- .debug_line    0x0000fc1a       0x84 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-memchr.o)
- .debug_line    0x0000fc9e      0x45d /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-fflush.o)
- .debug_line    0x000100fb      0x1f1 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-memmove.o)
- .debug_line    0x000102ec      0x8eb /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-mallocr.o)
- .debug_line    0x00010bd7     0x145e /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-dtoa.o)
- .debug_line    0x00012035      0x2b0 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-wsetup.o)
- .debug_line    0x000122e5      0x253 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-fclose.o)
- .debug_line    0x00012538      0x27f /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-__call_atexit.o)
- .debug_line    0x000127b7       0xb9 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-memcpy.o)
- .debug_line    0x00012870      0x22b /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-stdio.o)
- .debug_line    0x00012a9b      0x14f /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-__atexit.o)
- .debug_line    0x00012bea      0x698 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-reallocr.o)
- .debug_line    0x00013282      0x189 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-sprint_r.o)
- .debug_line    0x0001340b      0x1ad /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-assert.o)
- .debug_line    0x000135b8     0x1424 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-mprec.o)
- .debug_line    0x000149dc      0x17e /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-localeconv.o)
- .debug_line    0x00014b5a      0x29f /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-locale.o)
- .debug_line    0x00014df9      0x214 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-mbtowc_r.o)
- .debug_line    0x0001500d      0x115 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-abort.o)
- .debug_line    0x00015122      0x208 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-callocr.o)
- .debug_line    0x0001532a      0x1a9 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-fiprintf.o)
- .debug_line    0x000154d3      0x1fe /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-wctomb_r.o)
- .debug_line    0x000156d1      0x66f /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-signal.o)
- .debug_line    0x00015d40      0x1c5 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-signalr.o)
- .debug_line    0x00015f05      0xfe2 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-vfiprintf.o)
- .debug_line    0x00016ee7      0x1f0 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-reent.o)
- .debug_line    0x000170d7      0x16f /usr/lib/gcc/arm-none-eabi/13.2.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_addsubdf3.o)
- .debug_line    0x00017246      0x184 /usr/lib/gcc/arm-none-eabi/13.2.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_muldivdf3.o)
- .debug_line    0x000173ca       0xa6 /usr/lib/gcc/arm-none-eabi/13.2.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_cmpdf2.o)
- .debug_line    0x00017470       0x57 /usr/lib/gcc/arm-none-eabi/13.2.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_unorddf2.o)
- .debug_line    0x000174c7       0x62 /usr/lib/gcc/arm-none-eabi/13.2.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_fixdfsi.o)
- .debug_line    0x00017529       0x6d /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libnosys.a(getpid.o)
- .debug_line    0x00017596       0x6c /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libnosys.a(kill.o)
- .debug_line    0x00017602       0x61 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libnosys.a(_exit.o)
+ .debug_line    0x000005cb       0x6a build/mes/scao8658_asm.o
+ .debug_line    0x00000635       0xe7 build/monitor.o
+ .debug_line    0x0000071c      0x498 build/parser.o
+ .debug_line    0x00000bb4      0x1cd build/dump.o
+ .debug_line    0x00000d81      0x1f7 build/syscall.o
+ .debug_line    0x00000f78      0x739 build/terminal.o
+ .debug_line    0x000016b1      0x7e1 build/decoder/decoder.o
+ .debug_line    0x00001e92       0x7f build/decoder/STM32F30x_decoder.o
+ .debug_line    0x00001f11      0x21c build/Drivers/CMSIS/Device/ST/STM32F3xx/Source/Templates/system_stm32f3xx.o
+ .debug_line    0x0000212d     0x17f9 build/Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_rcc.o
+ .debug_line    0x00003926      0x393 build/Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal.o
+ .debug_line    0x00003cb9      0x5bd build/Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_cortex.o
+ .debug_line    0x00004276      0x57f build/Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_gpio.o
+ .debug_line    0x000047f5     0x11c5 build/Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_pcd.o
+ .debug_line    0x000059ba      0x252 build/Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_pcd_ex.o
+ .debug_line    0x00005c0c     0x1d2b build/Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_spi.o
+ .debug_line    0x00007937      0x56a build/Drivers/STM32_USB_Device_Library/Core/Src/usbd_core.o
+ .debug_line    0x00007ea1      0x61e build/Drivers/STM32_USB_Device_Library/Core/Src/usbd_ctlreq.o
+ .debug_line    0x000084bf      0x1e7 build/Drivers/STM32_USB_Device_Library/Core/Src/usbd_ioreq.o
+ .debug_line    0x000086a6      0x4f7 build/Drivers/STM32_USB_Device_Library/Class/CDC/Src/usbd_cdc.o
+ .debug_line    0x00008b9d      0x5ab build/usbd_conf.o
+ .debug_line    0x00009148      0x27f build/usbd_desc.o
+ .debug_line    0x000093c7      0x298 build/usbd_cdc_interface.o
+ .debug_line    0x0000965f      0x6e2 build/Drivers/BSP/STM32F3-Discovery/stm32f3_discovery.o
+ .debug_line    0x00009d41      0x333 build/Drivers/BSP/STM32F3-Discovery/stm32f3_discovery_gyroscope.o
+ .debug_line    0x0000a074      0x458 build/Drivers/BSP/Components/l3gd20/l3gd20.o
+ .debug_line    0x0000a4cc      0x462 build/Drivers/BSP/Components/i3g4250d/i3g4250d.o
+ .debug_line    0x0000a92e       0xa8 build/Drivers/CMSIS/Device/ST/STM32F3xx/Source/Templates/gcc/startup_stm32f303xc.o
+ .debug_line    0x0000a9d6       0x86 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-strlen.o)
+ .debug_line    0x0000aa5c      0x1b6 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-memset.o)
+ .debug_line    0x0000ac12      0x158 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-strtok.o)
+ .debug_line    0x0000ad6a      0x3e6 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-strtoul.o)
+ .debug_line    0x0000b150      0x374 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-setvbuf.o)
+ .debug_line    0x0000b4c4      0x10c /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-errno.o)
+ .debug_line    0x0000b5d0       0xe7 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-impure.o)
+ .debug_line    0x0000b6b7      0x123 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-strcasecmp.o)
+ .debug_line    0x0000b7da      0x173 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-putchar.o)
+ .debug_line    0x0000b94d      0x545 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-freer.o)
+ .debug_line    0x0000be92      0x1c0 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-strtok_r.o)
+ .debug_line    0x0000c052      0x16b /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-malloc.o)
+ .debug_line    0x0000c1bd      0x2a1 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-putc.o)
+ .debug_line    0x0000c45e       0xe6 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-sysconf.o)
+ .debug_line    0x0000c544      0x11e /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-init.o)
+ .debug_line    0x0000c662      0x27d /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-wbuf.o)
+ .debug_line    0x0000c8df      0x153 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-mlock.o)
+ .debug_line    0x0000ca32      0x4fc /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-findfp.o)
+ .debug_line    0x0000cf2e      0x24a /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-puts.o)
+ .debug_line    0x0000d178      0x5ec /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-fvwrite.o)
+ .debug_line    0x0000d764       0x97 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-ctype_.o)
+ .debug_line    0x0000d7fb       0xc3 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-atexit.o)
+ .debug_line    0x0000d8be      0x1c5 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-printf.o)
+ .debug_line    0x0000da83       0xb9 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-strcpy.o)
+ .debug_line    0x0000db3c       0xd2 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-fini.o)
+ .debug_line    0x0000dc0e      0x1d1 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-fwalk.o)
+ .debug_line    0x0000dddf     0x1a85 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-vfprintf.o)
+ .debug_line    0x0000f864      0x3bd /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-makebuf.o)
+ .debug_line    0x0000fc21       0x84 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-memchr.o)
+ .debug_line    0x0000fca5      0x45d /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-fflush.o)
+ .debug_line    0x00010102      0x1f1 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-memmove.o)
+ .debug_line    0x000102f3      0x8eb /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-mallocr.o)
+ .debug_line    0x00010bde     0x145e /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-dtoa.o)
+ .debug_line    0x0001203c      0x2b0 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-wsetup.o)
+ .debug_line    0x000122ec      0x253 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-fclose.o)
+ .debug_line    0x0001253f      0x27f /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-__call_atexit.o)
+ .debug_line    0x000127be       0xb9 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-memcpy.o)
+ .debug_line    0x00012877      0x22b /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-stdio.o)
+ .debug_line    0x00012aa2      0x14f /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-__atexit.o)
+ .debug_line    0x00012bf1      0x698 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-reallocr.o)
+ .debug_line    0x00013289      0x189 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-sprint_r.o)
+ .debug_line    0x00013412      0x1ad /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-assert.o)
+ .debug_line    0x000135bf     0x1424 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-mprec.o)
+ .debug_line    0x000149e3      0x17e /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-localeconv.o)
+ .debug_line    0x00014b61      0x29f /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-locale.o)
+ .debug_line    0x00014e00      0x214 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-mbtowc_r.o)
+ .debug_line    0x00015014      0x115 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-abort.o)
+ .debug_line    0x00015129      0x208 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-callocr.o)
+ .debug_line    0x00015331      0x1a9 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-fiprintf.o)
+ .debug_line    0x000154da      0x1fe /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-wctomb_r.o)
+ .debug_line    0x000156d8      0x66f /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-signal.o)
+ .debug_line    0x00015d47      0x1c5 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-signalr.o)
+ .debug_line    0x00015f0c      0xfe2 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-vfiprintf.o)
+ .debug_line    0x00016eee      0x1f0 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg.a(libc_a-reent.o)
+ .debug_line    0x000170de      0x16f /usr/lib/gcc/arm-none-eabi/13.2.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_addsubdf3.o)
+ .debug_line    0x0001724d      0x184 /usr/lib/gcc/arm-none-eabi/13.2.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_muldivdf3.o)
+ .debug_line    0x000173d1       0xa6 /usr/lib/gcc/arm-none-eabi/13.2.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_cmpdf2.o)
+ .debug_line    0x00017477       0x57 /usr/lib/gcc/arm-none-eabi/13.2.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_unorddf2.o)
+ .debug_line    0x000174ce       0x62 /usr/lib/gcc/arm-none-eabi/13.2.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_fixdfsi.o)
+ .debug_line    0x00017530       0x6d /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libnosys.a(getpid.o)
+ .debug_line    0x0001759d       0x6c /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libnosys.a(kill.o)
+ .debug_line    0x00017609       0x61 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libnosys.a(_exit.o)
 
 .debug_str      0x00000000     0x8960
  .debug_str     0x00000000     0x8960 build/main.o
