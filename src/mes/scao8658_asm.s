@@ -88,6 +88,66 @@ OutLabel:
     bx lr
 
 .size scao8658_string_test, .-scao8658_string_test
+.align 2
+.syntax unified
+.global scao8658_a2
+.code 16
+.thumb_func
+.type scao8658_a2, %function
+
+@ Function Declaration : int scao8658_a2(int num, int wait)
+@
+@ Input:
+@   r0 = num
+@   r1 = wait
+@
+@ Returns:
+@   r0 = total toggle count
+@
+scao8658_a2:
+
+    push {r4, r5, r6, r7, lr}
+
+    mov r4, r0
+    mov r5, r1
+    mov r6, #0
+
+a2_cycle_loop:
+
+    cmp r4, #0
+    beq a2_done
+
+    mov r7, #0
+
+a2_led_loop:
+
+    cmp r7, #8
+    beq a2_cycle_done
+
+    mov r0, r7
+    bl BSP_LED_Toggle
+
+    add r6, r6, #1
+
+    mov r0, r5
+    bl busy_delay
+
+    add r7, r7, #1
+    b a2_led_loop
+
+a2_cycle_done:
+
+    sub r4, r4, #1
+    b a2_cycle_loop
+
+a2_done:
+
+    mov r0, r6
+
+    pop {r4, r5, r6, r7, lr}
+    bx lr
+
+.size scao8658_a2, .-scao8658_a2
 .global busy_delay
 .type busy_delay, %function
 busy_delay:
