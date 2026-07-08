@@ -1,6 +1,8 @@
-/*
- * C to assembler menu hook
+
+ *  C to assembler menu hook
  *
+ *  Modified by scao8658
+ * 
  */
 
 #include <stdio.h>
@@ -9,95 +11,51 @@
 
 #include "common.h"
 
-int scao8658_add_test(int x, int y, uint32_t delay);
+int scao8658_lab6(int x, int y);
 
-void AddTest(int action)
+void Lab6_scao8658(int action)
 {
-    if(action==CMD_SHORT_HELP)
-        return;
 
-    if(action==CMD_LONG_HELP)
-    {
-        printf("Addition Test\n\n"
-               "This command tests new addition function by scao8658\n");
-        return;
-    }
-uint32_t delay;
-int fetch_status;
+  if(action==CMD_SHORT_HELP) return;
+  if(action==CMD_LONG_HELP) {
+    printf("Lab 6\n\n"
+	   "This command tests new lab 6 function by scao8658\n"
+	   );
 
-fetch_status = fetch_uint32_arg(&delay);
+    return;
+  }/*
 
-if(fetch_status)
-{
-    delay = 0xFFFFFF;
+  printf("scao8658_lab6 returned: %d\n", scao8658_lab6(99, 87) );
 }
 
-    printf("scao8658_add_test returned: %d\n",
-       scao8658_add_test(99, 87, delay));
-}
+ADD_CMD("scao8658_lab6", Lab6_scao8658,"Test the new lab 6 function")
 
-ADD_CMD("scao8658_add", AddTest,
-        "Test the new add function");
-int scao8658_string_test(char *p);
-int scao8658_a2(int num, int wait);
+int scao8658_a3(char *pattern_ptr);
 
-void scao8658_StringTest(int action)
+void A3_scao8658(int action)
 {
-    if(action==CMD_SHORT_HELP)
-        return;
 
-    if(action==CMD_LONG_HELP)
-    {
-        printf("String Test\n\n"
-               "This command tests new string function by scao8658\n");
-        return;
-    }
+  if(action==CMD_SHORT_HELP) return;
+  if(action==CMD_LONG_HELP) {
+    printf("Assignment 3 Test\n\n"
+	   "This is the A3 function by scao8658\n"
+	   );
 
-    int fetch_status;
-    char *destptr;
+    return;
+  }
 
-    fetch_status = fetch_string_arg(&destptr);
+  int fetch_status;
+  char *pattern;
 
-    if(fetch_status)
-    {
-        return;
-    }
+  fetch_status = fetch_string_arg(&pattern);
 
-    printf("string_test returned: %d\n",
-           scao8658_string_test(destptr));
+  if (fetch_status) {
+    // Default logic goes here
+    pattern = "Test Pattern";
+  }
+
+  printf("scao8658_a3 returned: %d\n", scao8658_a3(pattern) );
 }
 
-ADD_CMD("scao8658_string",
-        scao8658_StringTest,
-        "Test the new string function")
-// Assignment 2 C Hook Function
-//
-void _scao8658_Assignment2(int action)
-{
-    if(action == CMD_SHORT_HELP) return;
+ADD_CMD("scao8658_a3", A3_scao8658,"Run A3 for scao8658")
 
-    if(action == CMD_LONG_HELP) {
-        printf("Assignment 2\n\n"
-               "This command triggers assignment 2 by scao8658\n");
-        return;
-    }
-
-    uint32_t count;
-    uint32_t delay;
-    int fetch_status;
-
-    fetch_status = fetch_uint32_arg(&count);
-    if(fetch_status) {
-        count = 1;
-    }
-
-    fetch_status = fetch_uint32_arg(&delay);
-    if(fetch_status) {
-        delay = 0xFFFFA;
-    }
-
-    printf("scao8658_a2 returned: %d\n",
-           scao8658_a2(count, delay));
-}
-
-ADD_CMD("scao8658_a2", _scao8658_Assignment2, "Assignment 2");
