@@ -1,5 +1,6 @@
 
- *  C to assembler menu hook
+/* 
+*  C to assembler menu hook
  *
  *  Modified by scao8658
  * 
@@ -10,8 +11,7 @@
 #include <ctype.h>
 
 #include "common.h"
-
-int scao8658_lab6(int x, int y);
+int scao8658_lab6(int wait);
 
 void Lab6_scao8658(int action)
 {
@@ -23,9 +23,19 @@ void Lab6_scao8658(int action)
 	   );
 
     return;
-  }/*
+  }
 
-  printf("scao8658_lab6 returned: %d\n", scao8658_lab6(99, 87) );
+ uint32_t wait;
+int fetch_status;
+
+fetch_status = fetch_uint32_arg(&wait);
+
+if(fetch_status){
+    wait = 0xFFFFF;
+}
+
+printf("scao8658_lab6 returned: %d\n",
+       scao8658_lab6(wait));
 }
 
 ADD_CMD("scao8658_lab6", Lab6_scao8658,"Test the new lab 6 function")

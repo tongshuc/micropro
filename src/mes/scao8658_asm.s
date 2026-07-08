@@ -32,18 +32,50 @@
 @ 
 
 @ Here is the actual scao8658_lab6 function
+@ Function Declaration : int scao8658_lab6(int wait)
+@
+@ Input: r0 = delay value from user
+@ Returns: r0 = number of LED toggles before button press
+@
+@ This function toggles LEDs from index 7 down to 0.
+@ After each toggle, it delays, then checks the user button.
+@ If the button is pressed, the function returns the toggle count.
+
 scao8658_lab6:
-    push {lr}
+    push {r4, r5, r6, lr}
 
-    @ These lines just show that the code is working
-    ldr r0, =0xFFFFFF
-    bl busy_delay
+    mov r4, r0              @ r4 = wait value
+    mov r5, #7              @ r5 = LED index
+    mov r6, #0              @ r6 = toggle counter
 
-    pop {lr}
-    bx lr                           @ Return (Branch eXchange) to the address in the link register (lr) 
-    .size   scao8658_lab6, .-scao8658_lab6    @@ - symbol size (not strictly required, but makes the debugger happy)
+lab6_loop:
+    cmp r5, #0              @ check whether index is below 0
+    bge lab6_index_ok       @ if index >= 0, continue
 
+    mov r5, #7              @ reset LED index to 7
 
+lab6_index_ok:
+    mov r0, r5              @ r0 = current LED index
+    bl BSP_LED_Toggle       @ toggle current LED
+
+    add r6, r6, #1          @ increase toggle counter
+
+    sub r5, r5, #1          @ move to next LED index
+
+    mov r0, r4              @ r0 = delay value
+    bl busy_delay           @ wait
+
+    mov r0, #0              @ BUTTON_USER = 0
+    bl BSP_PB_GetState      @ read user button state
+
+    cmp r0, #0              @ 0 means button not pressed
+    beq lab6_loop           @ continue if button not pressed
+
+    mov r0, r6              @ return toggle counter
+
+    pop {r4, r5, r6, lr}
+    bx lr
+    .size scao8658_lab6, .-scao8658_lab6
 .global scao8658_a3
 .type   scao8658_a3, %function
 
