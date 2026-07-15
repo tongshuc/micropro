@@ -76,6 +76,29 @@ lab6_index_ok:
     pop {r4, r5, r6, lr}
     bx lr
     .size scao8658_lab6, .-scao8658_lab6
+@@ Function Header Block
+.global scao8658_lab7
+.type scao8658_lab7, %function
+
+@ Function Declaration: int scao8658_lab7(void)
+@
+@ Returns:
+@   r0 - return value
+
+scao8658_lab7:
+    push {lr}
+
+    @ Use a fixed delay for the initial Lab 7 test
+    ldr r0, =0xFFFFF
+    bl busy_delay
+
+    @ Return a predictable value to the C function
+    mov r0, #0
+
+    pop {lr}
+    bx lr
+
+.size scao8658_lab7, .-scao8658_lab7
 .global scao8658_a3
 .type   scao8658_a3, %function
 
