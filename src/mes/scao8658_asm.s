@@ -92,43 +92,36 @@ scao8658_lab7:
     bx lr
 
 .size scao8658_lab7,.-scao8658_lab7
-.global scao8658_a3
-.type   scao8658_a3, %function
+    .global scao8658_a3
+    .type   scao8658_a3, %function
 
-@ Function Declaration: int scao8658_a3(char *pattern_ptr)
+@ Function Declaration:
+@ int scao8658_a3(uint32_t wait, char *pattern_ptr, uint32_t num)
 @
-@ Input: r0 (i.e. r0 is a pointer to the first character of the pattern)
-@ Returns: r0
-@ 
+@ Inputs:
+@   r0 = wait value passed directly to busy_delay
+@   r1 = pointer to the first character of the pattern string
+@   r2 = maximum number of complete pattern repeats
+@
+@ Returns:
+@   r0 = total number of calls made to BSP_LED_Toggle
+@
+@ Description:
+@   Repeatedly processes the LED pattern until the requested number
+@   of complete repeats has been performed or the user button is
+@   pressed. The complete Assignment 3 logic will be added in small,
+@   tested stages.
 
-@ Here is the function
 scao8658_a3:
+    push {r4, r5, r6, lr}   @ Preserve registers used by this function
 
-    bx lr
-    .size   scao8658_a3, .-scao8658_a3
+    mov r4, r0              @ r4 = wait
+    mov r5, r1              @ r5 = address of pattern string
+    mov r6, r2              @ r6 = requested repeat count
 
-@ Function Declaration: int busy_delay(int cycles)
-@
-@ Input: r0 (i.e. r0 is how many cycles to delay)
-@ Returns: r0
-@ 
+    mov r0, #0              @ Temporary return value: zero toggles
 
-@ Here is the actual function. DO NOT MODIFY THIS FUNCTION
-busy_delay:
-    push {r6}
-    mov r6, r0
+    pop {r4, r5, r6, lr}    @ Restore saved registers
+    bx lr                   @ Return to C
 
-    d3lay_loop:
-        subs r6, r6, #1
-        bge d3lay_loop
-
-        mov r0, #0      @ Return zero (success)
-
-    pop {r6}
-    bx lr               @ Return to calling function
-
-
-@ Assembly file ended by single .end directive on its own line
-.end
-
-Things past the end directive are not processed, as you can see here.
+    .size scao8658_a3, .-scao8658_a3

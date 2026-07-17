@@ -109,32 +109,81 @@ ADD_CMD(
     "Test the new lab 7 function"
 )
 
-int scao8658_a3(char *pattern_ptr);
+/*
+ * Assembly function for Assignment 3.
+ *
+ * Parameters:
+ *   wait        - delay passed directly to busy_delay
+ *   pattern_ptr - pointer to the LED pattern string
+ *   num         - maximum number of complete pattern repeats
+ *
+ * Returns:
+ *   Number of times BSP_LED_Toggle was called.
+ */
+int scao8658_a3(uint32_t wait, char *pattern_ptr, uint32_t num);
 
+/*
+ * Menu hook for Assignment 3.
+ *
+ * Usage:
+ *   scao8658_a3 <wait> <pattern> <num>
+ *
+ * Example:
+ *   scao8658_a3 0xFFFFF 11234 5
+ *
+ * This C function only retrieves the arguments, supplies sensible
+ * defaults, calls the assembly function, and prints its return value.
+ * All Assignment 3 game logic is implemented in assembly.
+ */
 void A3_scao8658(int action)
 {
+    if(action == CMD_SHORT_HELP)
+        return;
 
-  if(action==CMD_SHORT_HELP) return;
-  if(action==CMD_LONG_HELP) {
-    printf("Assignment 3 Test\n\n"
-	   "This is the A3 function by scao8658\n"
-	   );
+    if(action == CMD_LONG_HELP) {
+        printf(
+            "Assignment 3 - Blinking Lights\n\n"
+            "Usage: scao8658_a3 <wait> <pattern> <num>\n"
+            "  wait    - delay passed directly to busy_delay\n"
+            "  pattern - sequence of LED numbers\n"
+            "  num     - maximum number of pattern repeats\n"
+            "\n"
+            "Example:\n"
+            "  scao8658_a3 0xFFFFF 11234 5\n"
+        );
 
-    return;
-  }
+        return;
+    }
 
-  int fetch_status;
-  char *pattern;
+    uint32_t wait;
+    char *pattern;
+    uint32_t num;
 
-  fetch_status = fetch_string_arg(&pattern);
+    /*
+     * Retrieve the arguments in the required order:
+     * wait, pattern, num.
+     */
+    if(fetch_uint32_arg(&wait)) {
+        wait = 0xFFFFF;
+    }
 
-  if (fetch_status) {
-    // Default logic goes here
-    pattern = "Test Pattern";
-  }
+    if(fetch_string_arg(&pattern)) {
+        pattern = "1234";
+    }
 
-  printf("scao8658_a3 returned: %d\n", scao8658_a3(pattern) );
+    if(fetch_uint32_arg(&num)) {
+        num = 5;
+    }
+
+    printf(
+        "scao8658_a3 returned: %d\n",
+        scao8658_a3(wait, pattern, num)
+    );
 }
 
-ADD_CMD("scao8658_a3", A3_scao8658,"Run A3 for scao8658")
+ADD_CMD(
+    "scao8658_a3",
+    A3_scao8658,
+    "Run Assignment 3 blinking lights"
+)
 
