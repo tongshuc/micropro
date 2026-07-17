@@ -131,23 +131,31 @@ a3_read_pattern:
 
     ldrb r0, [r5]           @ Read current pattern character
 
-    cmp r0, #0              @ Has the null terminator been reached?
-    beq a3_next_repeat      @ Yes: one complete pattern is finished
+    cmp r0, #0              @ End of string?
+    beq a3_next_repeat
 
-    sub r0, r0, #'0'        @ Convert ASCII digit to integer LED number
+    cmp r0, #'0'            @ Character below ASCII '0'?
+    blt a3_advance_char     @ Ignore invalid character
+
+    cmp r0, #'7'            @ Character above ASCII '7'?
+    bgt a3_advance_char     @ Ignore invalid character
+
+    sub r0, r0, #'0'        @ Convert ASCII '0'-'7' to LED index
 
     bl BSP_LED_Toggle       @ Toggle selected LED
 
-    add r7, r7, #1          @ Count this toggle
+    add r7, r7, #1          @ Count only valid LED toggles
 
-    mov r0, r4              @ Pass wait value to busy_delay
+    mov r0, r4
     bl busy_delay
 
-    mov r0, #0              @ BUTTON_USER = 0
-    bl BSP_PB_GetState      @ Read user button state
+    mov r0, #0
+    bl BSP_PB_GetState
 
-    cmp r0, #0              @ Zero means not pressed
-    bne a3_finish           @ Stop immediately if button is pressed
+    cmp r0, #0
+    bne a3_finish
+
+a3_advance_char:
 
     add r5, r5, #1          @ Move to next pattern character
     b a3_read_pattern
