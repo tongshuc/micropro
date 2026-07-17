@@ -113,15 +113,58 @@ scao8658_lab7:
 @   tested stages.
 
 scao8658_a3:
-    push {r4, r5, r6, lr}   @ Preserve registers used by this function
 
-    mov r4, r0              @ r4 = wait
-    mov r5, r1              @ r5 = address of pattern string
-    mov r6, r2              @ r6 = requested repeat count
+    push {r4-r7,lr}
 
-    mov r0, #0              @ Temporary return value: zero toggles
+    mov r4, r0          @ wait
+    mov r5, r1          @ pattern pointer
+    mov r6, r2          @ repeat number
 
-    pop {r4, r5, r6, lr}    @ Restore saved registers
-    bx lr                   @ Return to C
+    mov r7, #0          @ toggle count = 0
+
+read_first_char:
+
+    ldrb r0, [r5]       @ read first character
+
+    cmp r0, #0          @ end of string?
+    beq finish
+
+    sub r0, r0, #'0'    @ ASCII -> integer
+
+finish:
+
+    mov r0, r7
+
+    pop {r4-r7,lr}
+    bx lr
 
     .size scao8658_a3, .-scao8658_a3
+@ Function Declaration: int busy_delay(int cycles)
+@
+@ Input:
+@   r0 = number of delay cycles
+@
+@ Returns:
+@   r0 = 0
+@
+@ Description:
+@   Performs a simple busy-wait delay.
+@   DO NOT MODIFY THE INTERNALS OF THIS FUNCTION.
+
+busy_delay:
+    push {r6}              @ Preserve r6
+
+    mov r6, r0             @ r6 = requested delay count
+
+d3lay_loop:
+    subs r6, r6, #1        @ Decrease delay counter
+    bge d3lay_loop         @ Continue until counter is below zero
+
+    mov r0, #0             @ Return zero
+
+    pop {r6}               @ Restore r6
+    bx lr                  @ Return to caller
+
+
+@ Assembly file ends here
+.end
