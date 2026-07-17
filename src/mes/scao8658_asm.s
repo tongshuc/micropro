@@ -129,8 +129,35 @@ read_first_char:
     cmp r0, #0          @ end of string?
     beq finish
 
-    sub r0, r0, #'0'    @ ASCII -> integer
+   sub r0,r0,#'0'
 
+bl BSP_LED_Toggle
+
+mov r0,r4
+bl busy_delay
+
+add r7,r7,#1
+read_pattern:
+
+    ldrb r0, [r5]          @ Read current character
+
+    cmp r0, #0            @ End of string?
+    beq finish
+
+    sub r0, r0, #'0'      @ ASCII -> integer
+
+    bl BSP_LED_Toggle
+
+    mov r0, r4
+    bl busy_delay
+
+    add r7, r7, #1
+
+    add r5, r5, #1        @ Move to next character
+
+    b read_pattern
+
+finish:
 finish:
 
     mov r0, r7
