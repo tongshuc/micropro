@@ -111,61 +111,59 @@ scao8658_lab7:
 @   of complete repeats has been performed or the user button is
 @   pressed. The complete Assignment 3 logic will be added in small,
 @   tested stages.
-
+        
 scao8658_a3:
 
-    push {r4-r7,lr}
+    push {r4-r7, lr}        @ Preserve registers and return address
+    sub sp, sp, #4          @ Reserve space for original pattern pointer
 
-    mov r4, r0          @ wait
-    mov r5, r1          @ pattern pointer
-    mov r6, r2          @ repeat number
+    mov r4, r0              @ r4 = wait value
+    mov r5, r1              @ r5 = current pattern pointer
+    mov r6, r2              @ r6 = number of repeats
+    mov r7, #0              @ r7 = total toggle count
 
-    mov r7, #0          @ toggle count = 0
+    str r1, [sp]            @ Save original pattern pointer on stack
 
-read_first_char:
+    cmp r6, #0              @ If num is zero, do nothing
+    beq a3_finish
 
-    ldrb r0, [r5]       @ read first character
+a3_read_pattern:
 
-    cmp r0, #0          @ end of string?
-    beq finish
+    ldrb r0, [r5]           @ Read current pattern character
 
-   sub r0,r0,#'0'
+    cmp r0, #0              @ Has the null terminator been reached?
+    beq a3_next_repeat      @ Yes: one complete pattern is finished
 
-bl BSP_LED_Toggle
+    sub r0, r0, #'0'        @ Convert ASCII digit to integer LED number
 
-mov r0,r4
-bl busy_delay
+    bl BSP_LED_Toggle       @ Toggle the selected LED
 
-add r7,r7,#1
-read_pattern:
+    add r7, r7, #1          @ Increase total toggle count
 
-    ldrb r0, [r5]          @ Read current character
-
-    cmp r0, #0            @ End of string?
-    beq finish
-
-    sub r0, r0, #'0'      @ ASCII -> integer
-
-    bl BSP_LED_Toggle
-
-    mov r0, r4
+    mov r0, r4              @ Pass wait value to busy_delay
     bl busy_delay
 
-    add r7, r7, #1
+    add r5, r5, #1          @ Advance to the next pattern character
+    b a3_read_pattern       @ Continue processing this pattern
 
-    add r5, r5, #1        @ Move to next character
+a3_next_repeat:
 
-    b read_pattern
+    subs r6, r6, #1         @ One complete repeat has finished
+    beq a3_finish           @ Stop after the requested number of repeats
 
-finish:
-finish:
+    ldr r5, [sp]            @ Restore pointer to start of pattern
+    b a3_read_pattern       @ Process the pattern again
 
-    mov r0, r7
+a3_finish:
 
-    pop {r4-r7,lr}
+    mov r0, r7              @ Return total number of LED toggles
+
+    add sp, sp, #4          @ Remove saved pattern pointer
+    pop {r4-r7, lr}         @ Restore registers and return address
     bx lr
 
     .size scao8658_a3, .-scao8658_a3
+
 @ Function Declaration: int busy_delay(int cycles)
 @
 @ Input:
