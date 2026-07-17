@@ -136,15 +136,21 @@ a3_read_pattern:
 
     sub r0, r0, #'0'        @ Convert ASCII digit to integer LED number
 
-    bl BSP_LED_Toggle       @ Toggle the selected LED
+    bl BSP_LED_Toggle       @ Toggle selected LED
 
-    add r7, r7, #1          @ Increase total toggle count
+    add r7, r7, #1          @ Count this toggle
 
     mov r0, r4              @ Pass wait value to busy_delay
     bl busy_delay
 
-    add r5, r5, #1          @ Advance to the next pattern character
-    b a3_read_pattern       @ Continue processing this pattern
+    mov r0, #0              @ BUTTON_USER = 0
+    bl BSP_PB_GetState      @ Read user button state
+
+    cmp r0, #0              @ Zero means not pressed
+    bne a3_finish           @ Stop immediately if button is pressed
+
+    add r5, r5, #1          @ Move to next pattern character
+    b a3_read_pattern
 
 a3_next_repeat:
 
