@@ -1,165 +1,209 @@
-@ scao8658_asm.s Data section - initialized values
-.data
+@ Test code for my own new function called from C
 
-.align 3
-huge:   .octa 0xAABBCCDDDDCCBBFF
-big:    .word 0xAAEEBBFF
-num:    .byte 0xAB
-
-str2:   .asciz "Guten Tag!"
-count:  .word 12345
-
-@ End of data section
+@ This is a comment. Anything after an @ symbol is ignored.
+@@ This is also a comment. Some people use double @@ symbols. 
 
 
-.syntax unified
-.cpu cortex-m4
-.thumb
-.text
+    .code   16              @ This directive selects the instruction set being generated. 
+                            @ The value 16 selects Thumb, with the value 32 selecting ARM.
 
+    .text                   @ Tell the assembler that the upcoming section is to be considered
+                            @ assembly language instructions - Code section (text -> ROM)
 
-@ Function Declaration
-@ Function: scao8658_add_test
-@ Purpose: Load and manipulate data, then test addition
-.global scao8658_add_test
-.type scao8658_add_test, %function
+@@ Function Header Block
+    .align  2               @ Code alignment - 2^n alignment (n=2)
+                            @ This causes the assembler to use 4 byte alignment
 
-scao8658_add_test:
-    push {r4, lr}
+    .syntax unified         @ Sets the instruction set to the new unified ARM + THUMB
+                            @ instructions. The default is divided (separate instruction sets)
 
-   
+    .global scao8658_lab6        @ Make the symbol name for the function visible to the linker
 
-    @ Load the addresses of each item
-    ldr r0, =num
-    ldr r0, =big
-    ldr r0, =huge
-    ldr r0, =str2
+    .code   16              @ 16bit THUMB code (BOTH .code and .thumb_func are required)
+    .thumb_func             @ Specifies that the following symbol is the name of a THUMB
+                            @ encoded function. Necessary for interlinking between ARM and THUMB code.
 
-    @ Load the first byte of str2
-    ldr r2, =str2
-    ldrb r0, [r2]
+    .type   scao8658_lab6, %function   @ Declares that the symbol is a function (not strictly required)
 
-    @ Load the first word of str2
-    ldr r2, =str2
-    ldr r0, [r2]
+@ Function Declaration : int scao8658_lab6(int x, int y)
+@
+@ Input: r0, r1 (i.e. r0 holds x, r1 holds y)
+@ Returns: r0
+@ 
 
-    @ Load the value of num
-    ldr r2, =num
-    ldrb r0, [r2]
+@ Here is the actual scao8658_lab6 function
+@ Function Declaration : int scao8658_lab6(int wait)
+@
+@ Input: r0 = delay value from user
+@ Returns: r0 = number of LED toggles before button press
+@
+@ This function toggles LEDs from index 7 down to 0.
+@ After each toggle, it delays, then checks the user button.
+@ If the button is pressed, the function returns the toggle count.
 
-    @ Load the value of big
-    ldr r2, =big
-    ldr r0, [r2]
+scao8658_lab6:
+    push {r4, r5, r6, lr}
 
-    @ Load the 64-bit value of huge
-    ldr r2, =huge
-    ldrd r0, r1, [r2]
+    mov r4, r0              @ r4 = wait value
+    mov r5, #7              @ r5 = LED index
+    mov r6, #0              @ r6 = toggle counter
 
-   
+lab6_loop:
+    cmp r5, #0              @ check whether index is below 0
+    bge lab6_index_ok       @ if index >= 0, continue
 
-    add r4, r0, r1
+    mov r5, #7              @ reset LED index to 7
 
-    mov r0, r2
+lab6_index_ok:
+    mov r0, r5              @ r0 = current LED index
+    bl BSP_LED_Toggle       @ toggle current LED
+
+    add r6, r6, #1          @ increase toggle counter
+
+    sub r5, r5, #1          @ move to next LED index
+
+    mov r0, r4              @ r0 = delay value
+    bl busy_delay           @ wait
+
+    mov r0, #0              @ BUTTON_USER = 0
+    bl BSP_PB_GetState      @ read user button state
+
+    cmp r0, #0              @ 0 means button not pressed
+    beq lab6_loop           @ continue if button not pressed
+
+    mov r0, r6              @ return toggle counter
+
+    pop {r4, r5, r6, lr}
+    bx lr
+    .size scao8658_lab6, .-scao8658_lab6
+@@ Function Header Block
+.global scao8658_lab7
+.type scao8658_lab7,%function
+
+scao8658_lab7:
+    push {lr}
+
+    @ r0 already contains delay
     bl busy_delay
 
-    mov r0, r4
+    mov r0,#0
 
-    pop {r4, lr}
+    pop {lr}
     bx lr
 
+.size scao8658_lab7,.-scao8658_lab7
+    .global scao8658_a3
+    .type   scao8658_a3, %function
 
-@ Function Declaration
-@ Function: busy_delay
-@ Purpose: Perform a simple delay loop
-.global scao8658_string_test
-
-scao8658_string_test:
-
-StringLoop:
-    ldrb r1, [r0]
-    cmp r1, #0
-    beq OutLabel
-
-    add r0, r0, #1
-    b StringLoop
-
-OutLabel:
-    bkpt
-    bx lr
-
-.size scao8658_string_test, .-scao8658_string_test
-.align 2
-.syntax unified
-.global scao8658_a2
-.code 16
-.thumb_func
-.type scao8658_a2, %function
-
-@ Function Declaration : int scao8658_a2(int num, int wait)
+@ Function Declaration:
+@ int scao8658_a3(uint32_t wait, char *pattern_ptr, uint32_t num)
 @
-@ Input:
-@   r0 = num
-@   r1 = wait
+@ Inputs:
+@   r0 = wait value passed directly to busy_delay
+@   r1 = pointer to the first character of the pattern string
+@   r2 = maximum number of complete pattern repeats
 @
 @ Returns:
-@   r0 = total toggle count
+@   r0 = total number of calls made to BSP_LED_Toggle
 @
-scao8658_a2:
+@ Description:
+@   Repeatedly processes the LED pattern until the requested number
+@   of complete repeats has been performed or the user button is
+@   pressed. The complete Assignment 3 logic will be added in small,
+@   tested stages.
+        
+scao8658_a3:
 
-    push {r4, r5, r6, r7, lr}
+    push {r4-r7, lr}        @ Preserve registers and return address
+    sub sp, sp, #4          @ Reserve space for original pattern pointer
 
-    mov r4, r0
-    mov r5, r1
-    mov r6, #0
+    mov r4, r0              @ r4 = wait value
+    mov r5, r1              @ r5 = current pattern pointer
+    mov r6, r2              @ r6 = number of repeats
+    mov r7, #0              @ r7 = total toggle count
 
-a2_cycle_loop:
+    str r1, [sp]            @ Save original pattern pointer on stack
 
-    cmp r4, #0
-    beq a2_done
+    cmp r6, #0              @ If num is zero, do nothing
+    beq a3_finish
 
-    mov r7, #0
+a3_read_pattern:
 
-a2_led_loop:
+    ldrb r0, [r5]           @ Read current pattern character
 
-    cmp r7, #8
-    beq a2_cycle_done
+    cmp r0, #0              @ End of string?
+    beq a3_next_repeat
 
-    mov r0, r7
-    bl BSP_LED_Toggle
+    cmp r0, #'0'            @ Character below ASCII '0'?
+    blt a3_advance_char     @ Ignore invalid character
 
-    add r6, r6, #1
+    cmp r0, #'7'            @ Character above ASCII '7'?
+    bgt a3_advance_char     @ Ignore invalid character
 
-    mov r0, r5
+    sub r0, r0, #'0'        @ Convert ASCII '0'-'7' to LED index
+
+    bl BSP_LED_Toggle       @ Toggle selected LED
+
+    add r7, r7, #1          @ Count only valid LED toggles
+
+    mov r0, r4
     bl busy_delay
 
-    add r7, r7, #1
-    b a2_led_loop
-
-a2_cycle_done:
-
-    sub r4, r4, #1
-    b a2_cycle_loop
-
-a2_done:
-
-    mov r0, r6
-
-    pop {r4, r5, r6, r7, lr}
-    bx lr
-
-.size scao8658_a2, .-scao8658_a2
-.global busy_delay
-.type busy_delay, %function
-busy_delay:
-    push {r6}
-
-    mov r6, r0
-
-delay_label:
-    subs r6, r6, #1
-    bge delay_label
-
     mov r0, #0
+    bl BSP_PB_GetState
 
-    pop {r6}
+    cmp r0, #0
+    bne a3_finish
+
+a3_advance_char:
+
+    add r5, r5, #1          @ Move to next pattern character
+    b a3_read_pattern
+
+a3_next_repeat:
+
+    subs r6, r6, #1         @ One complete repeat has finished
+    beq a3_finish           @ Stop after the requested number of repeats
+
+    ldr r5, [sp]            @ Restore pointer to start of pattern
+    b a3_read_pattern       @ Process the pattern again
+
+a3_finish:
+
+    mov r0, r7              @ Return total number of LED toggles
+
+    add sp, sp, #4          @ Remove saved pattern pointer
+    pop {r4-r7, lr}         @ Restore registers and return address
     bx lr
+
+    .size scao8658_a3, .-scao8658_a3
+
+@ Function Declaration: int busy_delay(int cycles)
+@
+@ Input:
+@   r0 = number of delay cycles
+@
+@ Returns:
+@   r0 = 0
+@
+@ Description:
+@   Performs a simple busy-wait delay.
+@   DO NOT MODIFY THE INTERNALS OF THIS FUNCTION.
+
+busy_delay:
+    push {r6}              @ Preserve r6
+
+    mov r6, r0             @ r6 = requested delay count
+
+d3lay_loop:
+    subs r6, r6, #1        @ Decrease delay counter
+    bge d3lay_loop         @ Continue until counter is below zero
+
+    mov r0, #0             @ Return zero
+
+    pop {r6}               @ Restore r6
+    bx lr                  @ Return to caller
+
+
+@ Assembly file ends here
+.end
