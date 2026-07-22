@@ -15,6 +15,16 @@ const uint32_t numLEDs = sizeof(LEDs)/sizeof(LEDs[0]);
 /* Private function prototypes -----------------------------------------------*/
 static void SystemClock_Config(void);
 
+// Prototypes
+extern void scao8658_tick(void);
+extern void scao8658_btn(void);
+
+// Button interrupt handler
+void EXTI0_IRQHandler(void)
+{
+    scao8658_btn();
+    HAL_GPIO_EXTI_IRQHandler(USER_BUTTON_PIN);
+}
 int main(int argc, char **argv)
 {
   uint32_t i;
@@ -34,7 +44,7 @@ int main(int argc, char **argv)
   }
 
   /* Initialize the pushbutton */
-  BSP_PB_Init(BUTTON_USER, BUTTON_MODE_GPIO);
+ BSP_PB_Init(BUTTON_USER, BUTTON_MODE_EXTI);
 
 #ifdef INIT_ACCEL
   /* Initialize the Accelerometer */
@@ -127,6 +137,7 @@ void SysTick_Handler(void)
 {
     HAL_IncTick();
     my_Tick();
+    scao8658_tick();
 }
 
 void CmdLED(int mode)
