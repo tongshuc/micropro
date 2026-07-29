@@ -204,9 +204,14 @@ busy_delay:
 scao8658_lab9:
     push {lr}
 
-    @ Temporary test code
-    mov r0, #0
-    bl BSP_LED_Toggle
+    ldr r1, =LEDaddress
+    ldr r1, [r1]
+
+    ldrh r0, [r1]
+
+    orr r0, r0, #0x0100
+
+    strh r0, [r1]
 
     mov r0, #0
 
@@ -214,6 +219,8 @@ scao8658_lab9:
     bx lr
 
 .size scao8658_lab9, .-scao8658_lab9
+LEDaddress:
+    .word 0x48001014
 
 
 @ Here is another data section, we will use it for some key interrupt items
