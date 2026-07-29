@@ -79,7 +79,34 @@ void Lab8_scao8658(int action)
   printf("scao8658_lab8 returned: %d\n", scao8658_lab8() );
 }
 
+
 ADD_CMD("scao8658_lab8", Lab8_scao8658,"Test the new lab 8 function")
+// Assembly function for Lab 9
+int scao8658_lab9(void);
+
+// Menu command for Lab 9
+void Lab9_scao8658(int action)
+{
+    if (action == CMD_SHORT_HELP)
+        return;
+
+    if (action == CMD_LONG_HELP)
+    {
+        printf(
+            "Lab 9\n\n"
+            "This command tests new lab 9 function by scao8658\n"
+        );
+        return;
+    }
+
+    printf("scao8658_lab9 returned: %d\n", scao8658_lab9());
+}
+
+ADD_CMD(
+    "scao8658_lab9",
+    Lab9_scao8658,
+    "Test the new lab 9 function"
+)
 
 int scao8658_a4(int x);
 

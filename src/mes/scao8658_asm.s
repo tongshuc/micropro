@@ -187,6 +187,33 @@ busy_delay:
 
     pop {r6}
     bx lr               @ Return to calling function
+@@ Function Header Block
+.align 2
+.global scao8658_lab9
+
+.code 16
+.thumb_func
+
+.type scao8658_lab9, %function
+
+@ Function Declaration: int scao8658_lab9(void)
+@
+@ Input: None
+@ Returns: r0
+@
+scao8658_lab9:
+    push {lr}
+
+    @ Temporary test code
+    mov r0, #0
+    bl BSP_LED_Toggle
+
+    mov r0, #0
+
+    pop {lr}
+    bx lr
+
+.size scao8658_lab9, .-scao8658_lab9
 
 
 @ Here is another data section, we will use it for some key interrupt items
