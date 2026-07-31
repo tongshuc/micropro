@@ -66,17 +66,61 @@ scao8658_lab8:
 
 @ Here is the actual function
 scao8658_a4:
+    push {r4-r6, lr}
 
-    @ This function only exists to start / initialize your A4
-    @ logic working. No actions should be taken in this logic,
-    @ aside from storing the parameters your A4 logic needs to run.
+    @ r0 = status
+    @ r1 = num_to_skip
+    @ r2 = direction
 
-    @ Store the value we received indicating the running state
-    ldr r1, =a4_is_running
-    str r0, [r1]
+    @ save running status
+    ldr r4, =a4_is_running
+    str r0, [r4]
 
+    @ save skip value
+    ldr r4, =a4_skip_value
+    str r1, [r4]
+
+    @ reset current skip counter
+    ldr r4, =a4_skip_count
+    mov r5, #0
+    str r5, [r4]
+
+    @ if direction != 0, save it
+    cmp r2, #0
+    beq keep_direction
+
+    ldr r4, =a4_direction
+    str r2, [r4]
+
+keep_direction:
+
+    @ start from LED0
+    ldr r4, =a4_current_led
+    mov r5, #0
+    str r5, [r4]
+
+    @ turn off all LEDs
+    mov r0, #0
+    bl BSP_LED_Off
+    mov r0, #1
+    bl BSP_LED_Off
+    mov r0, #2
+    bl BSP_LED_Off
+    mov r0, #3
+    bl BSP_LED_Off
+    mov r0, #4
+    bl BSP_LED_Off
+    mov r0, #5
+    bl BSP_LED_Off
+    mov r0, #6
+    bl BSP_LED_Off
+    mov r0, #7
+    bl BSP_LED_Off
+
+    mov r0, #0
+
+    pop {r4-r6, lr}
     bx lr
-    .size   scao8658_a4, .-scao8658_a4
 
 
 .global scao8658_a4_btn
@@ -119,7 +163,7 @@ scao8658_a4_btn:
 
 @ Here is the actual function
 scao8658_a4_tick:
-    push {lr}
+  push {r4-r6, lr}
 
     @ As a starting point, this function implements the basics needed
     @ to determine if our A4 logic should be running.
@@ -137,34 +181,69 @@ scao8658_a4_tick:
     @ of calls.
 
 
-    @ ***** Get something
+        @ Is A4 running?
     ldr r1, =a4_is_running
     ldr r0, [r1]
 
-    @ ***** Check something
     cmp r0, #0
     ble a4_skip
 
-        @ This part below is skipped if A4 is NOT running. You will want to
-        @ keep all your A4 logic inside here.
-        @ DO NOT PUT LOGIC FOR A4 ABOVE THIS LINE -----------------------------
+    @ Load current skip counter
+    ldr r1, =a4_skip_count
+    ldr r2, [r1]
 
-        @ Even within this logic, you should still take a philosopy of check
-        @ things, do things, and store things - do not use delays of any sort,
-        @ and only use loops if they are bounded (that is, guaranteed to end)
+    @ Increment counter
+    add r2, r2, #1
 
-        @ ***** Do something
-        mov r0, #0
-        bl BSP_LED_Toggle
+    @ Load required skip value
+    ldr r3, =a4_skip_value
+    ldr r4, [r3]
 
-        @ DO NOT PUT LOGIC FOR A4 BELOW THIS LINE -----------------------------
-        @ End of A4 skipped logic. Do not add logic below here.
+    @ Compare
+    cmp r2, r4
+    ble store_and_exit
 
-    a4_skip:
+    @ Time to perform an action
+    mov r2, #0
+    str r2, [r1]
+
+       @ Toggle the current LED
+    ldr r5, =a4_current_led
+    ldr r0, [r5]
+    bl BSP_LED_Toggle
+
+    @ Load the direction
+    ldr r6, =a4_direction
+    ldr r6, [r6]
+
+    @ Move to the previous LED when direction is negative
+    cmp r6, #0
+    blt move_decreasing
+
+    @ Positive direction: current LED = current LED + 1
+    ldr r0, [r5]
+    add r0, r0, #1
+    and r0, r0, #7
+    str r0, [r5]
+    b a4_skip
+
+move_decreasing:
+    @ Negative direction: current LED = current LED - 1
+    ldr r0, [r5]
+    sub r0, r0, #1
+    and r0, r0, #7
+    str r0, [r5]
+
+    b a4_skip
+
+store_and_exit:
+    str r2, [r1]
+
+a4_skip:
 
     @ ***** End of our tick function
-    pop {lr}
-    bx lr
+   pop {r4-r6, lr}
+   bx lr
     .size   scao8658_a4_tick, .-scao8658_a4_tick
 
 
@@ -216,8 +295,8 @@ scao8658_lab9:
 
     mov r0, #0
 
-    pop {lr}
-    bx lr
+   pop {lr}
+   bx lr
 
 .size scao8658_lab9, .-scao8658_lab9
 LEDaddress:
@@ -227,9 +306,16 @@ LEDaddress:
 @ Here is another data section, we will use it for some key interrupt items
 @ We will put all necessary data for A4 in this block
 .data
-a4_is_running: .word 0
-a4_button_count: .word 0
 
+a4_is_running:    .word 0
+a4_button_count:  .word 0
+
+a4_skip_count:    .word 0
+a4_skip_value:    .word 0
+
+a4_direction:     .word 1
+
+a4_current_led:   .word 0
 
 @ Assembly file ended by single .end directive on its own line
 .end

@@ -108,31 +108,40 @@ ADD_CMD(
     "Test the new lab 9 function"
 )
 
-int scao8658_a4(int x);
+int scao8658_a4(int status, int num_to_skip, int direction);
 
 void A4_scao8658(int action)
 {
+    if(action==CMD_SHORT_HELP)
+        return;
 
-  if(action==CMD_SHORT_HELP) return;
-  if(action==CMD_LONG_HELP) {
-    printf("Assignment 4 Test\n\n"
-	   "This command tests new A4 function by scao8658\n"
-	   );
+    if(action==CMD_LONG_HELP)
+    {
+        printf("Assignment 4 Test\n\n"
+               "This command tests new A4 function by scao8658\n");
+        return;
+    }
 
-    return;
-  }
+    int fetch_status;
 
-  int fetch_status;
-  uint32_t a4_start;
+    uint32_t status = 1;
+    uint32_t num_to_skip = 0;
+    int32_t direction = 1;
 
-  fetch_status = fetch_uint32_arg(&a4_start);
+    fetch_status = fetch_uint32_arg(&status);
+    if(fetch_status)
+        status = 1;
 
-  if (fetch_status) {
-    a4_start = 1;
-  }
+    fetch_status = fetch_uint32_arg(&num_to_skip);
+    if(fetch_status)
+        num_to_skip = 0;
 
+    fetch_status = fetch_int32_arg(&direction);
+    if(fetch_status)
+        direction = 1;
 
-  printf("scao8658_a4 returned: %d\n", scao8658_a4(a4_start) );
+    printf("scao8658_a4 returned: %d\n",
+           scao8658_a4(status, num_to_skip, direction));
 }
 
 ADD_CMD("scao8658_a4", A4_scao8658,"Test the A4 function")
