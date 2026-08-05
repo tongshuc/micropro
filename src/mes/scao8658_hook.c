@@ -166,8 +166,20 @@ void Lab10_scao8658(int action)
         return;
     }
 
-    printf("Initializing Watchdog\n");
-    mes_InitIWDG(9999);
+    uint32_t reload = 9999;
+int fetch_status;
+
+fetch_status = fetch_uint32_arg(&reload);
+
+if (fetch_status)
+{
+    reload = 9999;
+}
+
+printf("Initializing Watchdog with reload value %lu\n",
+       (unsigned long)reload);
+
+mes_InitIWDG(reload);
 
     printf("Starting Watchdog\n");
     mes_IWDGStart();
