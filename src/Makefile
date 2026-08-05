@@ -10,7 +10,9 @@ SRCS = main.c
 
 # C to assembly language templates
 SRCS += mycode.s mytest.c
-SRCS += mes/scao8658_hook.c mes/scao8658_asm.s
+SRCS += mes/scao8658_hook.c
+SRCS += mes/scao8658_asm.s
+SRCS += mes/watchdog.c
 
 # Simple Monitor sources
 SRCS += monitor.c parser.c dump.c syscall.c terminal.c \
@@ -50,6 +52,7 @@ SRCS   += $(HAL_SRC)/stm32f3xx_hal_rcc.c \
           $(HAL_SRC)/stm32f3xx_hal_pcd_ex.c \
 	  $(HAL_SRC)/stm32f3xx_hal_i2c.c \
 	  $(HAL_SRC)/stm32f3xx_hal_spi.c
+SRCS += $(HAL_SRC)/stm32f3xx_hal_iwdg.c
 
 # USB Sources
 USB_CORE     = Drivers/STM32_USB_Device_Library/Core

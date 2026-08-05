@@ -146,5 +146,39 @@ void A4_scao8658(int action)
 
 ADD_CMD("scao8658_a4", A4_scao8658,"Test the A4 function")
 
+// Watchdog functions implemented in watchdog.c
+void mes_InitIWDG(int reload);
+void mes_IWDGStart(void);
+void mes_IWDGRefresh(void);
+
+// Lab 10 watchdog menu command
+void Lab10_scao8658(int action)
+{
+    if (action == CMD_SHORT_HELP)
+        return;
+
+    if (action == CMD_LONG_HELP)
+    {
+        printf(
+            "Lab 10\n\n"
+            "This command tests the watchdog timer by scao8658\n"
+        );
+        return;
+    }
+
+    printf("Initializing Watchdog\n");
+    mes_InitIWDG(9999);
+
+    printf("Starting Watchdog\n");
+    mes_IWDGStart();
+}
+
+ADD_CMD(
+    "scao8658_lab10",
+    Lab10_scao8658,
+    "Test the new Lab 10 function"
+)
+
+
 
 
