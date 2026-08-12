@@ -15,9 +15,10 @@
 
 #define N 500
 
-// A4 Interrupt Handlers - these are in scao8658_asm.s
+// A4/A5 Interrupt Handlers - these are in scao8658_asm.s
 void scao8658_a4_btn(void);
 void scao8658_a4_tick(void);
+void scao8658_a5_tick(void);
 
 
 // Timer tick hook for our timer interrupt
@@ -42,11 +43,11 @@ void scao8658_tick(void)
   // and toggle LED 0.
   //
   // This proves to us that our interrupt is working.
-  if (ticks > N)
-  {
+ if (ticks > N)
+{
     ticks = 0;
-    scao8658_a4_tick();
-  }
+    scao8658_a5_tick();
+}
 
 
 }
@@ -145,6 +146,44 @@ void A4_scao8658(int action)
 }
 
 ADD_CMD("scao8658_a4", A4_scao8658,"Test the A4 function")
+
+int scao8658_a5(int status, int num_to_skip, int direction);
+
+void A5_scao8658(int action)
+{
+    if(action==CMD_SHORT_HELP)
+        return;
+
+    if(action==CMD_LONG_HELP)
+    {
+        printf("Assignment 5 Test\n\n"
+               "This command tests new A5 function by scao8658\n");
+        return;
+    }
+
+    int fetch_status;
+
+    uint32_t status = 1;
+    uint32_t num_to_skip = 0;
+    int32_t direction = 1;
+
+    fetch_status = fetch_uint32_arg(&status);
+    if(fetch_status)
+        status = 1;
+
+    fetch_status = fetch_uint32_arg(&num_to_skip);
+    if(fetch_status)
+        num_to_skip = 0;
+
+    fetch_status = fetch_int32_arg(&direction);
+    if(fetch_status)
+        direction = 1;
+
+    printf("scao8658_a5 returned: %d\n",
+           scao8658_a5(status, num_to_skip, direction));
+}
+
+ADD_CMD("scao8658_a5", A5_scao8658,"Test the A5 function")
 
 // Watchdog functions implemented in watchdog.c
 void mes_InitIWDG(int reload);

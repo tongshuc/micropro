@@ -136,6 +136,35 @@ keep_direction:
 @ as well as requires a new function set up void EXTI0_IRQHandler(void)
 
 @ Here is the actual function
+.global scao8658_a5
+.type scao8658_a5, %function
+
+@ Function Declaration : int scao8658_a5(int status, int num_to_skip, int direction)
+@
+@ Input:
+@   r0 = status
+@   r1 = num_to_skip
+@   r2 = direction
+@
+@ Returns:
+@   r0 = 0 on success
+@
+@ This function starts or stops Assignment 5 processing.
+
+scao8658_a5:
+    push {r4, lr}
+
+    @ Save A5 running status
+    ldr r4, =a5_running
+    str r0, [r4]
+
+    @ Return success
+    mov r0, #0
+
+    pop {r4, lr}
+    bx lr
+
+.size scao8658_a5, .-scao8658_a5
 scao8658_a4_btn:
     push {lr}
 
@@ -254,6 +283,37 @@ a4_skip:
 @ 
 
 @ Here is the actual function. DO NOT MODIFY THIS FUNCTION
+.global scao8658_a5_tick
+.type scao8658_a5_tick, %function
+
+@ Function Declaration : void scao8658_a5_tick(void)
+@
+@ Input: None
+@ Returns: Nothing
+@
+@ A5 periodic tick function.
+@ A5 logic only executes while a5_running is non-zero.
+
+scao8658_a5_tick:
+    push {lr}
+
+    @ Load the A5 running flag
+    ldr r1, =a5_running
+    ldr r0, [r1]
+
+    @ Skip A5 logic when A5 is not running
+    cmp r0, #0
+    ble a5_skip
+
+    @ Temporary LED toggle used to test the initial A5 tick
+    mov r0, #0
+    bl BSP_LED_Toggle
+
+a5_skip:
+    pop {lr}
+    bx lr
+
+.size scao8658_a5_tick, .-scao8658_a5_tick
 busy_delay:
     push {r6}
     mov r6, r0
@@ -316,6 +376,7 @@ a4_skip_value:    .word 0
 a4_direction:     .word 1
 
 a4_current_led:   .word 0
+a5_running:       .word 0
 
 @ Assembly file ended by single .end directive on its own line
 .end
