@@ -19,6 +19,7 @@
 void scao8658_a4_btn(void);
 void scao8658_a4_tick(void);
 void scao8658_a5_tick(void);
+void scao8658_a5_btn(void);
 
 
 // Timer tick hook for our timer interrupt
@@ -58,8 +59,7 @@ void scao8658_tick(void)
 // Note that for now, this function toggles LED 6 when the button is pressed.
 void scao8658_btn(void)
 {
-  // For now, just toggle an LED to prove the button press was noticed.
-  scao8658_a4_btn();
+    scao8658_a5_btn();
 }
 
 int scao8658_lab8(void);

@@ -1,145 +1,70 @@
-@ Assembly File - Lab 8 Version
+@ Assembly File - Lab 8 / Assignment 5 Version
 @
-@ NOTE THERE IS A DATA SECTION AT THE END OF THIS FILE FOR ASSIGNMENT 4
+@ NOTE THERE IS A DATA SECTION AT THE END OF THIS FILE.
 @ USE THAT DATA SECTION FOR ANY DATA YOU NEED, DO NOT ADD ANOTHER.
 
+
 @ This is a comment. Anything after an @ symbol is ignored.
-@@ This is also a comment. Some people use double @@ symbols. 
+@@ This is also a comment. Some people use double @@ symbols.
 
 
-    .code   16              @ This directive selects the instruction set being generated. 
-                            @ The value 16 selects Thumb, with the value 32 selecting ARM.
+    .code   16
+    .text
 
-    .text                   @ Tell the assembler that the upcoming section is to be considered
-                            @ assembly language instructions - Code section (text -> ROM)
+    .align  2
+    .syntax unified
 
-@@ Function Header Block
-    .align  2               @ Code alignment - 2^n alignment (n=2)
-                            @ This causes the assembler to use 4 byte alignment
 
-    .syntax unified         @ Sets the instruction set to the new unified ARM + THUMB
-                            @ instructions. The default is divided (separate instruction sets)
+@ ============================================================
+@ LAB 8
+@ ============================================================
 
-    .global scao8658_lab8        @ Make the symbol name for the function visible to the linker
+    .global scao8658_lab8
+    .code   16
+    .thumb_func
+    .type   scao8658_lab8, %function
 
-    .code   16              @ 16bit THUMB code (BOTH .code and .thumb_func are required)
-    .thumb_func             @ Specifies that the following symbol is the name of a THUMB
-                            @ encoded function. Necessary for interlinking between ARM and THUMB code.
-
-    .type   scao8658_lab8, %function   @ Declares that the symbol is a function (not strictly required)
 
 @ Function Declaration : void scao8658_lab8(void)
 @
-@ Input: none
-@ Returns: nothing
-@ 
+@ Input: None
+@ Returns: Nothing
+@
+@ Lab 8 test function.
 
-@ Here is the actual scao8658_lab8 function
+
 scao8658_lab8:
     push {lr}
 
-    @ For now, this function just toggles, delays, and toggles again.
+    @ Toggle LED 3
     mov r0, #3
     bl BSP_LED_Toggle
 
+    @ Delay
     ldr r0, =0xFFFFFFF
     bl busy_delay
 
+    @ Toggle LED 3 again
     mov r0, #3
     bl BSP_LED_Toggle
 
     pop {lr}
-    bx lr                           @ Return (Branch eXchange) to the address in the link register (lr) 
-    .size   scao8658_lab8, .-scao8658_lab8    @@ - symbol size (not strictly required, but makes the debugger happy)
-
-
-
-
-.global scao8658_a4
-.type   scao8658_a4, %function
-
-@ Function Declaration : int scao8658_a4(int x)
-@
-@ Input: Document this
-@ Returns: Document this
-@ 
-
-@ Here is the actual function
-scao8658_a4:
-    push {r4-r6, lr}
-
-    @ r0 = status
-    @ r1 = num_to_skip
-    @ r2 = direction
-
-    @ save running status
-    ldr r4, =a4_is_running
-    str r0, [r4]
-
-    @ save skip value
-    ldr r4, =a4_skip_value
-    str r1, [r4]
-
-    @ reset current skip counter
-    ldr r4, =a4_skip_count
-    mov r5, #0
-    str r5, [r4]
-
-    @ if direction != 0, save it
-    cmp r2, #0
-    beq keep_direction
-
-    ldr r4, =a4_direction
-    str r2, [r4]
-
-keep_direction:
-
-    @ start from LED0
-    ldr r4, =a4_current_led
-    mov r5, #0
-    str r5, [r4]
-
-    @ turn off all LEDs
-    mov r0, #0
-    bl BSP_LED_Off
-    mov r0, #1
-    bl BSP_LED_Off
-    mov r0, #2
-    bl BSP_LED_Off
-    mov r0, #3
-    bl BSP_LED_Off
-    mov r0, #4
-    bl BSP_LED_Off
-    mov r0, #5
-    bl BSP_LED_Off
-    mov r0, #6
-    bl BSP_LED_Off
-    mov r0, #7
-    bl BSP_LED_Off
-
-    mov r0, #0
-
-    pop {r4-r6, lr}
     bx lr
 
+    .size scao8658_lab8, .-scao8658_lab8
 
-.global scao8658_a4_btn
-.type   scao8658_a4_btn, %function
 
-@ Function Declaration : void scao8658_a4_btn(void)
-@
-@ Input: None
-@ Returns: Nothing
-@ 
-@ Reminder - this requires the button has been initialized as an interrupt
-@ in main.c using BSP_PB_Init(BUTTON_USER, BUTTON_MODE_EXTI)
-@ as well as requires a new function set up void EXTI0_IRQHandler(void)
 
-@ Here is the actual function
-.global scao8658_a5
-.type scao8658_a5, %function
+@ ============================================================
+@ ASSIGNMENT 4 MAIN FUNCTION
+@ ============================================================
 
-@ Function Declaration : int scao8658_a5(int status, int num_to_skip, int direction)
+    .global scao8658_a4
+    .type   scao8658_a4, %function
+
+
+@ Function Declaration :
+@ int scao8658_a4(int status, int num_to_skip, int direction)
 @
 @ Input:
 @   r0 = status
@@ -149,7 +74,98 @@ keep_direction:
 @ Returns:
 @   r0 = 0 on success
 @
-@ This function starts or stops Assignment 5 processing.
+
+
+scao8658_a4:
+    push {r4-r6, lr}
+
+    @ Save running status
+    ldr r4, =a4_is_running
+    str r0, [r4]
+
+    @ Save skip value
+    ldr r4, =a4_skip_value
+    str r1, [r4]
+
+    @ Reset current skip counter
+    ldr r4, =a4_skip_count
+    mov r5, #0
+    str r5, [r4]
+
+    @ If direction is zero, keep the previous direction
+    cmp r2, #0
+    beq keep_direction
+
+    @ Save new direction
+    ldr r4, =a4_direction
+    str r2, [r4]
+
+
+keep_direction:
+
+    @ Start from LED 0
+    ldr r4, =a4_current_led
+    mov r5, #0
+    str r5, [r4]
+
+    @ Turn off all LEDs
+    mov r0, #0
+    bl BSP_LED_Off
+
+    mov r0, #1
+    bl BSP_LED_Off
+
+    mov r0, #2
+    bl BSP_LED_Off
+
+    mov r0, #3
+    bl BSP_LED_Off
+
+    mov r0, #4
+    bl BSP_LED_Off
+
+    mov r0, #5
+    bl BSP_LED_Off
+
+    mov r0, #6
+    bl BSP_LED_Off
+
+    mov r0, #7
+    bl BSP_LED_Off
+
+    @ Return success
+    mov r0, #0
+
+    pop {r4-r6, lr}
+    bx lr
+
+    .size scao8658_a4, .-scao8658_a4
+
+
+
+@ ============================================================
+@ ASSIGNMENT 5 MAIN FUNCTION
+@ ============================================================
+
+    .global scao8658_a5
+    .type   scao8658_a5, %function
+
+
+@ Function Declaration :
+@ int scao8658_a5(int status, int num_to_skip, int direction)
+@
+@ Input:
+@   r0 = status
+@   r1 = num_to_skip
+@   r2 = direction
+@
+@ Returns:
+@   r0 = 0 on success
+@
+@ This function enables Assignment 5 processing and starts
+@ the independent watchdog.
+@
+
 
 scao8658_a5:
     push {r4, lr}
@@ -158,7 +174,7 @@ scao8658_a5:
     ldr r4, =a5_running
     str r0, [r4]
 
-    @ Initialize the watchdog with reload value 8000
+    @ Initialize watchdog using reload value 8000
     ldr r0, =8000
     bl mes_InitIWDG
 
@@ -171,53 +187,113 @@ scao8658_a5:
     pop {r4, lr}
     bx lr
 
-.size scao8658_a5, .-scao8658_a5
+    .size scao8658_a5, .-scao8658_a5
+
+
+
+@ ============================================================
+@ ASSIGNMENT 4 BUTTON FUNCTION
+@ ============================================================
+
+    .global scao8658_a4_btn
+    .type   scao8658_a4_btn, %function
+
+
+@ Function Declaration : void scao8658_a4_btn(void)
+@
+@ Input: None
+@ Returns: Nothing
+@
+@ This function is called by the user button interrupt.
+@
+
+
 scao8658_a4_btn:
     push {lr}
 
-    ldr r1, =a4_button_count        @ Get the address of the counter
-    ldr r0, [r1]                    @ Get the actual count
-    add r0, r0, #1                  @ Increment the count
-    and r0, #7                      @ Keep the count between 0 and 7
-    str r0, [r1]                    @ Store the new count
+    @ Get address of button counter
+    ldr r1, =a4_button_count
 
-    bl BSP_LED_Toggle               @ Toggle the current LED
+    @ Load current count
+    ldr r0, [r1]
+
+    @ Increment count
+    add r0, r0, #1
+
+    @ Keep count between 0 and 7
+    and r0, #7
+
+    @ Store new count
+    str r0, [r1]
+
+    @ Toggle the selected LED
+    bl BSP_LED_Toggle
 
     pop {lr}
     bx lr
-    .size   scao8658_a4_btn, .-scao8658_a4_btn
+
+    .size scao8658_a4_btn, .-scao8658_a4_btn
 
 
-.global scao8658_a4_tick
-.type  scao8658_a4_tick, %function
+
+@ ============================================================
+@ ASSIGNMENT 5 BUTTON FUNCTION
+@ ============================================================
+
+    .global scao8658_a5_btn
+    .type   scao8658_a5_btn, %function
+
+
+@ Function Declaration : void scao8658_a5_btn(void)
+@
+@ Input: None
+@ Returns: Nothing
+@
+@ Records that the user button has been pressed.
+@ The A5 tick function uses this flag to stop refreshing
+@ the watchdog.
+@
+
+
+scao8658_a5_btn:
+    push {lr}
+
+    @ Get address of the A5 button flag
+    ldr r1, =a5_btn_pressed
+
+    @ Set button flag to one
+    mov r0, #1
+    str r0, [r1]
+
+    pop {lr}
+    bx lr
+
+    .size scao8658_a5_btn, .-scao8658_a5_btn
+
+
+
+@ ============================================================
+@ ASSIGNMENT 4 TICK FUNCTION
+@ ============================================================
+
+    .global scao8658_a4_tick
+    .type   scao8658_a4_tick, %function
+
 
 @ Function Declaration : void scao8658_a4_tick(void)
 @
 @ Input: None
 @ Returns: Nothing
-@ 
+@
+@ Timer-driven Assignment 4 LED processing.
+@ No busy delays are used inside this interrupt-driven code.
+@
 
-@ Here is the actual function
+
 scao8658_a4_tick:
-  push {r4-r6, lr}
+    push {r4-r6, lr}
 
-    @ As a starting point, this function implements the basics needed
-    @ to determine if our A4 logic should be running.
-    @
-    @ You will have to add logic here for A4.
-
-    @ Some useful notes
-    @
-    @ BSP_LED_On, BSP_LED_Off - same argument as BSP_LED_Toggle, sets
-    @ the LED to ON or OFF as you tell it
-    @
-    @ How to delay: DO NOT use busy_delay - remember, this is an interrupt
-    @ handler. If you need a delay, use a counter to count how many times
-    @ this function has been called, and use that to skip a desired number
-    @ of calls.
-
-
-        @ Is A4 running?
+    @ Check whether Assignment 4 is running
     ldr r1, =a4_is_running
     ldr r0, [r1]
 
@@ -228,43 +304,50 @@ scao8658_a4_tick:
     ldr r1, =a4_skip_count
     ldr r2, [r1]
 
-    @ Increment counter
+    @ Increment skip counter
     add r2, r2, #1
 
     @ Load required skip value
     ldr r3, =a4_skip_value
     ldr r4, [r3]
 
-    @ Compare
+    @ Check whether enough ticks have occurred
     cmp r2, r4
     ble store_and_exit
 
-    @ Time to perform an action
+    @ Reset skip counter
     mov r2, #0
     str r2, [r1]
 
-       @ Toggle the current LED
+    @ Load current LED
     ldr r5, =a4_current_led
     ldr r0, [r5]
+
+    @ Toggle current LED
     bl BSP_LED_Toggle
 
-    @ Load the direction
+    @ Load direction
     ldr r6, =a4_direction
     ldr r6, [r6]
 
-    @ Move to the previous LED when direction is negative
+    @ Negative direction moves to previous LED
     cmp r6, #0
     blt move_decreasing
 
-    @ Positive direction: current LED = current LED + 1
+    @ Positive direction:
+    @ current LED = current LED + 1
     ldr r0, [r5]
     add r0, r0, #1
     and r0, r0, #7
     str r0, [r5]
+
     b a4_skip
 
+
 move_decreasing:
-    @ Negative direction: current LED = current LED - 1
+
+    @ Negative direction:
+    @ current LED = current LED - 1
     ldr r0, [r5]
     sub r0, r0, #1
     and r0, r0, #7
@@ -272,134 +355,249 @@ move_decreasing:
 
     b a4_skip
 
+
 store_and_exit:
+
+    @ Store updated skip counter
     str r2, [r1]
+
 
 a4_skip:
 
-    @ ***** End of our tick function
-   pop {r4-r6, lr}
-   bx lr
-    .size   scao8658_a4_tick, .-scao8658_a4_tick
+    pop {r4-r6, lr}
+    bx lr
+
+    .size scao8658_a4_tick, .-scao8658_a4_tick
 
 
-@ Function Declaration : int busy_delay(int cycles)
-@
-@ Input: r0 (i.e. r0 is how many cycles to delay)
-@ Returns: r0
-@ 
 
-@ Here is the actual function. DO NOT MODIFY THIS FUNCTION
-.global scao8658_a5_tick
-.type scao8658_a5_tick, %function
+@ ============================================================
+@ ASSIGNMENT 5 TICK FUNCTION
+@ ============================================================
+
+    .global scao8658_a5_tick
+    .type   scao8658_a5_tick, %function
+
 
 @ Function Declaration : void scao8658_a5_tick(void)
 @
 @ Input: None
 @ Returns: Nothing
 @
-@ A5 periodic tick function.
-@ A5 logic only executes while a5_running is non-zero.
+@ This function is called periodically by the timer interrupt.
+@
+@ When A5 is running:
+@   1. Toggle the four corner LEDs using direct memory access.
+@   2. Check whether the user button has been pressed.
+@   3. Refresh the watchdog while the button has not been pressed.
+@
+@ When the button is pressed, watchdog refreshing stops.
+@ The watchdog will then eventually reset the board.
+@
+
 
 scao8658_a5_tick:
     push {lr}
 
-    @ Load the A5 running flag
+    @ Get address of A5 running flag
     ldr r1, =a5_running
+
+    @ Load A5 running status
     ldr r0, [r1]
 
-    @ Skip A5 logic when A5 is not running
+    @ Skip all A5 processing when A5 is not running
     cmp r0, #0
     ble a5_skip
 
-    
-    @ Load the GPIO output data register address
+
+    @ --------------------------------------------------------
+    @ Direct LED addressing
+    @ --------------------------------------------------------
+
+    @ Load GPIO output data register address
     ldr r1, =LEDaddress
     ldr r1, [r1]
 
-    @ Read the current LED states
+    @ Read current LED states
     ldrh r0, [r1]
 
-    @ Toggle the four corner LEDs
+    @ Toggle four corner LEDs
+    @ 0xAA00 selects the four required LED bits
     ldr r2, =0xAA00
     eor r0, r0, r2
 
-    @ Store the new LED states directly to GPIO
+    @ Store updated LED states directly to GPIO
     strh r0, [r1]
-    @ Refresh the watchdog while A5 is running
+
+
+    @ --------------------------------------------------------
+    @ Watchdog processing
+    @ --------------------------------------------------------
+
+    @ Get address of button pressed flag
+    ldr r1, =a5_btn_pressed
+
+    @ Load button pressed status
+    ldr r0, [r1]
+
+    @ If button has been pressed, do not refresh watchdog
+    cmp r0, #0
+    bne a5_skip
+
+    @ Button has not been pressed, so keep watchdog alive
     bl mes_IWDGRefresh
 
+
 a5_skip:
+
     pop {lr}
     bx lr
 
-.size scao8658_a5_tick, .-scao8658_a5_tick
+    .size scao8658_a5_tick, .-scao8658_a5_tick
+
+
+
+@ ============================================================
+@ BUSY DELAY
+@ ============================================================
+
+
+@ Function Declaration : int busy_delay(int cycles)
+@
+@ Input:
+@   r0 = number of cycles to delay
+@
+@ Returns:
+@   r0 = 0
+@
+@ DO NOT USE THIS FUNCTION FROM THE A5 TICK FUNCTION.
+@
+
+
 busy_delay:
     push {r6}
+
+    @ Save number of delay cycles
     mov r6, r0
 
-    d3lay_loop:
-        subs r6, r6, #1
-        bge d3lay_loop
 
-        mov r0, #0      @ Return zero (success)
+d3lay_loop:
+
+    @ Decrement delay counter
+    subs r6, r6, #1
+
+    @ Continue until counter becomes negative
+    bge d3lay_loop
+
+    @ Return success
+    mov r0, #0
 
     pop {r6}
-    bx lr               @ Return to calling function
-@@ Function Header Block
-.align 2
-.global scao8658_lab9
+    bx lr
 
-.code 16
-.thumb_func
 
-.type scao8658_lab9, %function
 
-@ Function Declaration: int scao8658_lab9(void)
+@ ============================================================
+@ LAB 9
+@ ============================================================
+
+    .align 2
+    .global scao8658_lab9
+
+    .code 16
+    .thumb_func
+
+    .type scao8658_lab9, %function
+
+
+@ Function Declaration : int scao8658_lab9(void)
 @
 @ Input: None
-@ Returns: r0
+@ Returns:
+@   r0 = 0
 @
+@ Lab 9 direct LED addressing test.
+@
+
+
 scao8658_lab9:
     push {lr}
 
+    @ Load address containing the LED GPIO address
     ldr r1, =LEDaddress
+
+    @ Load actual GPIO address
     ldr r1, [r1]
 
+    @ Read current GPIO output
     ldrh r0, [r1]
 
+    @ Toggle selected LED bits
     ldr r2, =0xAA00
-     eor r0, r0, r2
+    eor r0, r0, r2
 
+    @ Write new GPIO output
     strh r0, [r1]
 
+    @ Return success
     mov r0, #0
 
-   pop {lr}
-   bx lr
+    pop {lr}
+    bx lr
 
-.size scao8658_lab9, .-scao8658_lab9
+    .size scao8658_lab9, .-scao8658_lab9
+
+
+
+@ ============================================================
+@ LED GPIO ADDRESS
+@ ============================================================
+
 LEDaddress:
     .word 0x48001014
 
 
-@ Here is another data section, we will use it for some key interrupt items
-@ We will put all necessary data for A4 in this block
-.data
 
-a4_is_running:    .word 0
-a4_button_count:  .word 0
+@ ============================================================
+@ DATA SECTION
+@ ============================================================
 
-a4_skip_count:    .word 0
-a4_skip_value:    .word 0
+    .data
 
-a4_direction:     .word 1
 
-a4_current_led:   .word 0
-a5_running:       .word 0
+@ Assignment 4 variables
 
-@ Assembly file ended by single .end directive on its own line
-.end
+a4_is_running:
+    .word 0
 
-Things past the end directive are not processed, as you can see here.
+a4_button_count:
+    .word 0
 
+a4_skip_count:
+    .word 0
+
+a4_skip_value:
+    .word 0
+
+a4_direction:
+    .word 1
+
+a4_current_led:
+    .word 0
+
+
+@ Assignment 5 variables
+
+a5_running:
+    .word 0
+
+a5_btn_pressed:
+    .word 0
+
+
+
+@ ============================================================
+@ END OF ASSEMBLY FILE
+@ ============================================================
+
+    .end
