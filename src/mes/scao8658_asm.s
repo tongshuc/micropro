@@ -326,6 +326,8 @@ scao8658_a5_tick:
 
     @ Store the new LED states directly to GPIO
     strh r0, [r1]
+    @ Refresh the watchdog while A5 is running
+    bl mes_IWDGRefresh
 
 a5_skip:
     pop {lr}
