@@ -305,9 +305,20 @@ scao8658_a5_tick:
     cmp r0, #0
     ble a5_skip
 
-    @ Temporary LED toggle used to test the initial A5 tick
-    mov r0, #0
-    bl BSP_LED_Toggle
+    
+    @ Load the GPIO output data register address
+    ldr r1, =LEDaddress
+    ldr r1, [r1]
+
+    @ Read the current LED states
+    ldrh r0, [r1]
+
+    @ Toggle the four corner LEDs
+    ldr r2, =0xAA00
+    eor r0, r0, r2
+
+    @ Store the new LED states directly to GPIO
+    strh r0, [r1]
 
 a5_skip:
     pop {lr}
