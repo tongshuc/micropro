@@ -158,6 +158,13 @@ scao8658_a5:
     ldr r4, =a5_running
     str r0, [r4]
 
+    @ Initialize the watchdog with reload value 8000
+    ldr r0, =8000
+    bl mes_InitIWDG
+
+    @ Start the watchdog
+    bl mes_IWDGStart
+
     @ Return success
     mov r0, #0
 
